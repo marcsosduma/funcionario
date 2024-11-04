@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<title>Spring-Boot Básico</title>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<link rel="icon" href="/image/favicon.png" />
+
+	<!-- Bootstrap core CSS -->
+	<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css" rel="stylesheet" />
+	
+	<!-- Custom styles for this template -->
+	<link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+	<header th:replace="~{fragments/header :: cabecalho}"></header>
+	
+	<div class="layout-main">
+		<aside>
+			<nav th:replace="~{fragments/sidebar :: nav-sidebar}"></nav>
+		</aside>
+		
+		<section layout:fragment="corpo">
+			<div>conteúdo principal das páginas</div>
+		</section>
+	</div>
+	
+	<footer th:replace="~{fragments/footer :: rodape}"></footer>
+	
+	<!-- Bootstrap core JavaScript -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		// Variável para armazenar a URL de navegação
+		var url = '';
+
+		// Evento de clique em botões com id que contém "btn_"
+		$('button[id*="btn_"]').on('click', function() {
+			// Extrai o id do botão e cria a URL
+			url = "http://localhost:8080/" + $(this).attr('id').split("_")[1];
+			$('#myModal').modal('show');
+		});
+
+		// Confirma e navega para a URL definida ao clicar em #ok_confirm
+		$('#ok_confirm').on('click', function() {
+			window.location.href = url;
+		});
+
+		// Controla a exibição da sidebar
+		$(document).ready(function() {
+			$(".navbar-toggle").on('click', function() {
+				$(".sidebar").toggleClass("sidebar-open");
+			});
+		});
+	</script>
+</body>
+</html>
