@@ -1,4 +1,4 @@
-package com.duma.funcionario.controller;
+package com.duma.funcionario.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

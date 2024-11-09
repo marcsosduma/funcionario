@@ -9,23 +9,23 @@ import com.duma.funcionario.domain.Cargo;
 
 import jakarta.transaction.Transactional;
 
-@Service @Transactional
+@Service
 public class CargoServiceImpl implements CargoService {
 
     @Autowired
     private CargoDao dao;
 
-    @Override
+    @Override @Transactional
     public void salvar(Cargo cargo) {
         dao.save(cargo);
     }
 
-    @Override
+    @Override  @Transactional
     public void editar(Cargo cargo) {
         dao.update(cargo);
     }
 
-    @Override
+    @Override  @Transactional
     public void excluir(Long id) {
         dao.delete(id);
     }
@@ -38,6 +38,14 @@ public class CargoServiceImpl implements CargoService {
     @Override
     public List<Cargo> buscarTodos() {
         return dao.findAll();
+    }
+
+    @Override
+    public boolean cargoTemFuncionarios(Long id){
+        if(buscarPorId(id).getFuncionarios().isEmpty()){
+            return false;
+        }
+        return true;
     }
 
 }

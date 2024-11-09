@@ -54,6 +54,10 @@
 			window.location.href = url;
 		});
 
+		$('#calcelar_confirm').on('click', function() {
+			$('#myModal').modal('hide');
+		});
+
 		// Controla a exibição da sidebar
 		$(document).ready(function() {
 			$(".navbar-toggle").on('click', function() {
