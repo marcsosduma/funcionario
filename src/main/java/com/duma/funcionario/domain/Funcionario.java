@@ -1,7 +1,12 @@
 package com.duma.funcionario.domain;
 
 import java.math.BigDecimal;
+import org.springframework.format.annotation.NumberFormat.Style;
 import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -22,6 +27,7 @@ public class Funcionario extends AbstractEntity<Long> {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    @NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
     @Column(nullable = false, columnDefinition = "DECIMAL(7,2) DEFAULT 0.00")
     private BigDecimal salario;
     public BigDecimal getSalario() {
@@ -30,6 +36,7 @@ public class Funcionario extends AbstractEntity<Long> {
     public void setSalario(BigDecimal salario) {
         this.salario = salario;
     }
+    @DateTimeFormat(iso = ISO.DATE)
     @Column(name="data_entrada", nullable = false, columnDefinition = "DATE")
     private LocalDate dataEntrada;
     public LocalDate getDataEntrada() {
@@ -38,6 +45,7 @@ public class Funcionario extends AbstractEntity<Long> {
     public void setDataEntrada(LocalDate dataEntrada) {
         this.dataEntrada = dataEntrada;
     }
+    @DateTimeFormat(iso = ISO.DATE)
     @Column(name="data_saida", nullable = true, columnDefinition = "DATE")
     private LocalDate dataSaida;
     public LocalDate getDataSaida() {

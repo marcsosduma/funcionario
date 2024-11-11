@@ -37,13 +37,14 @@
 	<script src="/webjars/jquery/jquery.min.js"></script>
 	<script src="/webjars/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 
 	<script type="text/javascript">
 		// Variável para armazenar a URL de navegação
 		var url = '';
 
 		// Evento de clique em botões com id que contém "btn_"
-		$('button[id*="btn_"]').on('click', function() {
+		$(document).on('click', 'button[id*="btn_"]', function() {
 			// Extrai o id do botão e cria a URL
 			url = "http://localhost:8080/" + $(this).attr('id').split("_")[1];
 			$('#myModal').modal('show');
@@ -54,23 +55,30 @@
 			window.location.href = url;
 		});
 
-		$('#calcelar_confirm').on('click', function() {
+		$('#cancelar_confirm').on('click', function() {
 			$('#myModal').modal('hide');
 		});
 
 		// Controla a exibição da sidebar
 		$(document).ready(function() {
+			$(function() {
+				$('[data-toggle="popover"]').popover();
+			});
+
+			// Toggle da sidebar
 			$(".navbar-toggle").on('click', function() {
 				$(".sidebar").toggleClass("sidebar-open");
 			});
 
+			// Esconde o alerta após 5 segundos
 			setTimeout(function(){
-					$(".alert").fadeOut('slow', function(){
-						$(this).alert('close');
-					});
-				}, 5000);
+				$(".alert").fadeOut('slow');
+			}, 5000);
+
 			
 		});
+
 	</script>
+
 </body>
 </html>
