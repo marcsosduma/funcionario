@@ -40,9 +40,9 @@
 	                    <div class="collapse" id="collapseNome">
 	
 	                        <nav class="navbar navbar-light bg-light">
-	                            <form class="form-inline" method="GET" action="/funcionarios/buscar/nome">
+	                            <form class="form-inline" method="GET" th:action="@{/funcionarios/buscar/nome}">
 	                                <input class="form-control mr-sm-2" type="search" placeholder="nome" aria-label="Search"
-	                                       name="nome" />
+	                                       th:name="nome" />
 	                                <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
 	                            </form>
 	                        </nav>
@@ -97,6 +97,9 @@
 	
 	
 	            <div class="table-responsive">
+
+					<div th:replace="fragments/alert"></div>
+
 	                <table class="table table-striped table-hover table-sm">
 	                    <thead>
 	                    <tr>
@@ -137,10 +140,10 @@
 	                        <td th:text="${#temporals.format(f.dataEntrada,'dd/MM/yyyy')}">01/10/2014</td>
 	                        <td th:text="${#temporals.format(f.dataSaida,'dd/MM/yyyy')}"></td>
 	                        <td colspan="2">
-	                            <a class="btn btn-info btn-sm" href="/funcionarios/editar/1" role="button">
+	                            <a class="btn btn-info btn-sm" th:href="@{/funcionarios/editar/{id}(id=${f.id})}"  role="button">
 	                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
 	                            </a>
-	                            <button id="btn_funcionarios/excluir/1" type="button" class="btn btn-danger btn-sm"
+	                            <button th:id="${#strings.concat('btn_funcionarios/excluir/', f.id) }" type="button" class="btn btn-danger btn-sm"
 	                                    data-toggle="modal" data-target="#myModal">
 	                                <span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
 	                            </button>
@@ -150,6 +153,7 @@
 	                </table>
 	            </div>
 	        </div>
+			<div th:replace="fragments/modal :: modal"></div>
 	    </section>
 </body>
 </html>		
