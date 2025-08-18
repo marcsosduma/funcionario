@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8"/>
+	<link href="/css/style.css" rel="stylesheet" />
+	<link href="/datatables/datatables.css" rel="stylesheet" />
+	<script src="/datatables/datatables.min.js"></script>
+	<script th:inline="none">
+	$(document).ready(function(){
+		$("#tabela_pessoas").DataTable({
+			ajax: "/pessoas/listar_json",
+			processing: true,
+			serverSide: true,
+			responsive: true,
+			// "bSort": false,
+			"aaSorting": [[1, 'asc']],
+			"pageLength": 10,
+			"language": {
+				"decimal": "",
+				"emptyTable": "Não há dados disponíveis",
+				"info": "_START_ até _END_ de _TOTAL_ registos",
+				"infoEmpty": "Mostrando de 0 até 0 de 0 registos",
+				"infoFiltered": "(filtrado em _MAX_ registos no total)",
+				"infoPostFix": "",
+				"thousands": ",",
+				"lengthMenu": "Mostrar _MENU_ registos",
+				"loadingRecords": "A carregar dados...",
+				"processing": "Processando...",
+				"search": "Procurar:",
+				"zeroRecords": "Não foram encontrados resultados",            
+				"aria": {
+					"sortAscending": ": ordem crescente",
+					"sortDescending": ": ordem decrescente"
+				}
+			},
+			"columnDefs": [
+				{
+					"targets": [0, 1],          // coluna número
+					"className": "nowrap"  // Adiciona a classe nowrap
+				}
+			]
+		});
+	});
+	</script>
+</head>
+<body>
+	    <section class="layout-content" layout:fragment="corpo">
+	
+	        <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>Lista de Pessoas</span>
+	                    </li>
+	                </ul>
+	            </div>
+	        </nav>
+	
+	        <div class="container" id="listagem">
+	            <div class="table-responsive">
+	                <table id="tabela_pessoas" class="table table-striped table-hover table-sm">
+	                    <thead>
+	                    <tr>
+	                        <th>#</th>
+	                        <th>Nome</th>
+	                        <th>CPF</th>
+	                        <th>E-mail</th>
+	                    </tr>
+	                    </thead>
+	                </table>
+	            </div>
+	        </div>
+	        
+			<div th:replace="~{fragments/modal :: modal }"></div>
+			
+	    </section>
+
+</body>
+</html>		

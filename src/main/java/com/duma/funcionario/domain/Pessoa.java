@@ -1,362 +1,186 @@
 package com.duma.funcionario.domain;
 
 import jakarta.persistence.*;
-import java.sql.Timestamp;
+import lombok.Data;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "PESWB_PESSOA")
-public class Pessoa  extends AbstractEntity<Long>  {
+@Data
+public class Pessoa {
+    
     @Id
-    @Column(name = "COD_PESWB", nullable = false)
+    @Column(name = "COD_PESWB")
     private Long codigo;
 
-    @Column(name = "IDC_ASS_PESWB", length = 1)
-    private String serAssessor;
+    @Column(name = "IDC_ASS_PESWB", nullable = true, length = 1)
+    private String indicadorAssessor;
 
-    @Column(name = "NOM_PESWB", nullable = false, length = 70)
+    @Column(name = "NOM_PESWB", length = 70, nullable = true)
     private String nome;
 
-    @Column(name = "OBS_PESWB", length = 310)
-    private String obs;
+    @Column(name = "OBS_PESWB", nullable = true, length = 400)
+    private String observacao;
 
-    @Column(name = "EMA_PESWB", length = 70)
+    @Column(name = "EMA_PESWB", nullable = true, length = 70)
     private String email;
 
-    @Column(name = "CPF_PESWB", length = 11)
+    @Column(name = "CPF_PESWB", nullable = true)
     private Long cpf;
 
-    @Column(name = "RG_PESWB", length = 15)
+    @Column(name = "RG_PESWB", nullable = true, length = 15)
     private String rg;
 
-    @Column(name = "SEX_PESWB", length = 1)
+    @Column(name = "SEX_PESWB", nullable = true, length = 1)
     private String sexo;
 
-    @Column(name = "DAT_NAS_PESWB")
-    private Timestamp dataNascimento;
+    @Column(name = "DAT_NAS_PESWB", nullable = true)
+    private LocalDate dataNascimento;
 
-    @Column(name = "NCL_PESWB", length = 1)
+    @Column(name = "NCL_PESWB", nullable = true, length = 1)
     private String nacionalidade;
 
-    @Column(name = "EST_CIV_PESWB", length = 1)
+    @Column(name = "EST_CIV_PESWB", nullable = true, length = 1)
     private String estadoCivil;
 
-    @Column(name = "SIT_PESWB", nullable = false, length = 1)
+    @Column(name = "SIT_PESWB", length = 1, nullable = true)
     private String situacao;
 
-    @Column(name = "IDC_DSP_PESWB", length = 3)
-    private String estarDisponivel;
+    @Column(name = "IDC_DSP_PESWB", nullable = true, length = 3)
+    private String indicadorDisponibilidade;
 
-    @Column(name = "IDC_ENV_PESWB", length = 1)
-    private String tipoEnvio;
+    @Column(name = "IDC_ENV_PESWB", nullable = true, length = 1)
+    private String tipoEnvioPreferencial;
 
-    @Column(name = "DAT_ASS_PESWB")
-    private Timestamp dataAssessor;
+    @Column(name = "DAT_ASS_PESWB", nullable = true)
+    private LocalDate dataAssessoramento;
 
-    @Column(name = "OBS_ASS_PESWB", length = 244)
-    private String obsAssessor;
+    @Column(name = "OBS_ASS_PESWB", nullable = true, length = 400)
+    private String observacaoAssessor;
 
-    @Column(name = "LGR_PESWB", length = 60)
+    @Column(name = "LGR_PESWB", nullable = true, length = 60)
     private String logradouro;
 
-    @Column(name = "CPL_PESWB", length = 60)
-    private String complemento;
+    @Column(name = "CPL_PESWB", nullable = true, length = 60)
+    private String complementoEndereco;
 
-    @Column(name = "CEP_PESWB", length = 8)
+    @Column(name = "CEP_PESWB", nullable = true, length = 8)
     private String cep;
 
-    @Column(name = "NUM_CXP_PESWB", length = 8)
-    private String caixaPostal;
+    @Column(name = "NUM_CXP_PESWB", nullable = true, length = 8)
+    private String numeroCaixaPostal;
 
-    @Column(name = "TXT_CUI_PESWB", length = 60)
+    @Column(name = "TXT_CUI_PESWB", nullable = true, length = 60)
     private String aosCuidados;
 
-    @Column(name = "CID_PESWB", length = 30)
+    @Column(name = "CID_PESWB", nullable = true, length = 30)
     private String cidade;
 
-    @Column(name = "UF_PESWB", length = 2)
-    private String uf;
+    @Column(name = "UF_PESWB", nullable = true, length = 2)
+    private String estado;
 
-    @Column(name = "IDC_END_PFR_PESWB", length = 1)
+    @Column(name = "IDC_END_PFR_PESWB", nullable = true, length = 1)
     private String enderecoPreferencial;
 
-    @Column(name = "TEL_PESWB", length = 19)
+    @Column(name = "TEL_PESWB", nullable = true, length = 19)
     private String telefoneResidencial;
 
-    @Column(name = "RAM_PESWB", length = 10)
+    @Column(name = "RAM_PESWB", nullable = true, length = 10)
     private String ramalResidencial;
 
-    @Column(name = "TEL_EME_PESWB", length = 19)
+    @Column(name = "TEL_EME_PESWB", nullable = true, length = 19)
     private String telefoneEmergencial;
 
-    @Column(name = "FAX_PESWB", length = 19)
+    @Column(name = "FAX_PESWB", nullable = true, length = 19)
     private String fax;
 
-    @Column(name = "RAM_FAX_PESWB", length = 4)
+    @Column(name = "RAM_FAX_PESWB", nullable = true, length = 4)
     private String ramalFax;
 
-    @Column(name = "END_INT_PESWB", length = 400)
+    @Column(name = "END_INT_PESWB", nullable = true, length = 400)
     private String enderecoInternacional;
 
-    @Column(name = "RGI_TRA_PESWB", length = 10)
+    @Column(name = "RGI_TRA_PESWB", nullable = true, length = 10)
     private String regimeTrabalho;
 
-    @Column(name = "ANO_INI_FCA_PESWB", length = 4)
+    @Column(name = "FCA_ATU_PESWB", nullable = true, length = 40)
+    private String funcaoAtual;
+
+    // Associação ManyToOne com Unidade
+    @ManyToOne(fetch = FetchType.EAGER) // lazy="false"
+    @JoinColumn(name = "UNIWB_COD_UNIWB")
+    private Unidade unidadeVinculo;
+
+    @Column(name = "DEP_PESWB", nullable = true, length = 70)
+    private String departamento;
+
+    @Column(name = "QTD_PCE_ABT_PESWB", nullable = true)
+    private Integer pareceresAbertos;
+
+    @Column(name = "QTD_PCE_DVL_PESWB", nullable = true)
+    private Integer pareceresEmitidosUltimos12Meses;
+
+    @Column(name = "TMP_MED_PCE_PESWB", nullable = true)
+    private Integer tempoMedioParecerInicial;
+
+    @Column(name = "TMP_MED_ACP_PESWB", nullable = true)
+    private Integer tempoMedioParecerAcompanhamento;
+
+    @Column(name = "CFT_PESWB", nullable = true, length = 1)
+    private String conflitoInteresse;
+
+    @Column(name = "NOM_FNT_PESWB", nullable = true, length = 70)
+    private String nomeFonético;
+
+    @Column(name = "QTD_PCE_ABT_SAG_PESWB", nullable = true)
+    private Integer pareceresAbertosSag;
+
+    @Column(name = "QTD_PCE_DVL_SAG_PESWB", nullable = true)
+    private Integer pareceresEmitidosSag;
+
+    @Column(name = "NOM_SGE_PESWB", nullable = true)
+    private String nomeSAGe;
+
+    @Column(name = "GSCH_PESWB", nullable = true, length = 550)
+    private String GSCH;
+
+    @Column(name = "URL_PUBLONS_PESWB", nullable = true, length = 550)
+    private String urlPublons;
+
+    @Column(name = "ORCID_PESWB", nullable = true, length = 550)
+    private String orcid;
+
+    @Column(name = "TIP_END_PESWB", nullable = true)
+    private String tipoEndereco;
+
+    @Column(name = "NOM_SCL_PESWB", nullable = true)
+    private String nomeSocial;
+
+    @Column(name = "DAT_CAD_PESWB", nullable = true)
+    private LocalDate dataCadastro;
+
+    @Column(name = "DAT_ATU_PESWB", nullable = true)
+    private LocalDate dataAtualizacao;
+
+    @Column(name = "ANO_INI_UNI_PESWB", nullable = true)
+    private Integer anoInicioUnidade;
+
+    @Column(name = "ANO_INI_FCA_PESWB", nullable = true)
     private Integer anoInicioFuncao;
 
-    // Getters and Setters
-    public Long getCodigo() {
-        return codigo;
-    }
+    @Column(name = "PAI_NAS_PESWB", nullable = true)
+    private String paisNascimento;
 
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
-    }
+    @Column(name = "UNIWB_COD_TMP_UNIWB", nullable = true)
+    private Long unidadeCodTmp;
 
-    public String getSerAssessor() {
-        return serAssessor;
-    }
-
-    public void setSerAssessor(String serAssessor) {
-        this.serAssessor = serAssessor;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getObs() {
-        return obs;
-    }
-
-    public void setObs(String obs) {
-        this.obs = obs;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(Long cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public Timestamp getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Timestamp dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public String getNacionalidade() {
-        return nacionalidade;
-    }
-
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
-
-    public String getSituacao() {
-        return situacao;
-    }
-
-    public void setSituacao(String situacao) {
-        this.situacao = situacao;
-    }
-
-    public String getEstarDisponivel() {
-        return estarDisponivel;
-    }
-
-    public void setEstarDisponivel(String estarDisponivel) {
-        this.estarDisponivel = estarDisponivel;
-    }
-
-    public String getTipoEnvio() {
-        return tipoEnvio;
-    }
-
-    public void setTipoEnvio(String tipoEnvio) {
-        this.tipoEnvio = tipoEnvio;
-    }
-
-    public Timestamp getDataAssessor() {
-        return dataAssessor;
-    }
-
-    public void setDataAssessor(Timestamp dataAssessor) {
-        this.dataAssessor = dataAssessor;
-    }
-
-    public String getObsAssessor() {
-        return obsAssessor;
-    }
-
-    public void setObsAssessor(String obsAssessor) {
-        this.obsAssessor = obsAssessor;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getCaixaPostal() {
-        return caixaPostal;
-    }
-
-    public void setCaixaPostal(String caixaPostal) {
-        this.caixaPostal = caixaPostal;
-    }
-
-    public String getAosCuidados() {
-        return aosCuidados;
-    }
-
-    public void setAosCuidados(String aosCuidados) {
-        this.aosCuidados = aosCuidados;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-
-    public String getEnderecoPreferencial() {
-        return enderecoPreferencial;
-    }
-
-    public void setEnderecoPreferencial(String enderecoPreferencial) {
-        this.enderecoPreferencial = enderecoPreferencial;
-    }
-
-    public String getTelefoneResidencial() {
-        return telefoneResidencial;
-    }
-
-    public void setTelefoneResidencial(String telefoneResidencial) {
-        this.telefoneResidencial = telefoneResidencial;
-    }
-
-    public String getRamalResidencial() {
-        return ramalResidencial;
-    }
-
-    public void setRamalResidencial(String ramalResidencial) {
-        this.ramalResidencial = ramalResidencial;
-    }
-
-    public String getTelefoneEmergencial() {
-        return telefoneEmergencial;
-    }
-
-    public void setTelefoneEmergencial(String telefoneEmergencial) {
-        this.telefoneEmergencial = telefoneEmergencial;
-    }
-
-    public String getFax() {
-        return fax;
-    }
-
-    public void setFax(String fax) {
-        this.fax = fax;
-    }
-
-    public String getRamalFax() {
-        return ramalFax;
-    }
-
-    public void setRamalFax(String ramalFax) {
-        this.ramalFax = ramalFax;
-    }
-
-    public String getEnderecoInternacional() {
-        return enderecoInternacional;
-    }
-
-    public void setEnderecoInternacional(String enderecoInternacional) {
-        this.enderecoInternacional = enderecoInternacional;
-    }
-
-    public String getRegimeTrabalho() {
-        return regimeTrabalho;
-    }
-
-    public void setRegimeTrabalho(String regimeTrabalho) {
-        this.regimeTrabalho = regimeTrabalho;
-    }
-
-    public Integer getAnoInicioFuncao() {
-        return anoInicioFuncao;
-    }
-
-    public void setAnoInicioFuncao(Integer anoInicioFuncao) {
-        this.anoInicioFuncao = anoInicioFuncao;
+    public String getCpfFormatado(){
+        String vCpf = "";        
+        if(this.cpf!=null){
+            vCpf = "00000000000" + this.cpf;
+            vCpf = vCpf.substring(vCpf.length()-11,vCpf.length());
+            vCpf = vCpf.substring(0, 3)+"."+vCpf.substring(3, 6)+"."+vCpf.substring(6, 9)+"-"+vCpf.substring(9, 11);
+        }
+        return vCpf;
     }
 }
