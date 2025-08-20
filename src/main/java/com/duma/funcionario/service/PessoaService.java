@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.duma.funcionario.domain.Pessoa;
+import com.duma.funcionario.dto.PessoaFiltroForm;
 
 public interface PessoaService {
 
@@ -19,5 +20,5 @@ public interface PessoaService {
 
     List<Pessoa> buscarTodos();
 
-    Page<Pessoa> buscarComFiltro(String termo, Pageable pageable);
+    Page<Pessoa> buscarComFiltro(PessoaFiltroForm filtro, Pageable pageable);
 }

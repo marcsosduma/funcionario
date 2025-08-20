@@ -7,8 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.duma.funcionario.dao.PessoaRepository;
+import com.duma.funcionario.dao.PessoaDao;
 import com.duma.funcionario.domain.Pessoa;
+import com.duma.funcionario.dto.PessoaFiltroForm;
 
 import jakarta.transaction.Transactional;
 
@@ -16,7 +17,7 @@ import jakarta.transaction.Transactional;
 public class PessoaServiceImpl implements PessoaService {
 
     @Autowired
-    private PessoaRepository dao;
+    private PessoaDao dao;
 
     @Override @Transactional
     public void salvar(Pessoa pessoa) {
@@ -28,14 +29,9 @@ public class PessoaServiceImpl implements PessoaService {
         dao.save(pessoa); // save já atualiza se o ID existir
     }
 
-    @Override @Transactional
-    public void excluir(Long id) {
-        dao.deleteById(id);
-    }
-
     @Override
     public Pessoa buscarPorId(Long id) {
-        return dao.findById(id).orElse(null);
+        return dao.findById(id);
     }
 
     @Override
@@ -44,8 +40,12 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     @Override
-    public Page<Pessoa> buscarComFiltro(String termo, Pageable pageable) {
-        if (termo == null) termo = "";
-        return dao.buscarComFiltro(termo, pageable);
+    public Page<Pessoa> buscarComFiltro(PessoaFiltroForm filtro, Pageable pageable) {
+        return dao.buscarComFiltro(filtro, pageable);
+    }
+
+    @Override
+    public void excluir(Long id) {
+        dao.delete(id);
     }
 }

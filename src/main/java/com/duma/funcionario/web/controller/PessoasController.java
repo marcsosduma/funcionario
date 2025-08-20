@@ -2,6 +2,7 @@ package com.duma.funcionario.web.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.duma.funcionario.domain.Atuacao;
+import com.duma.funcionario.domain.Funcionario;
 import com.duma.funcionario.domain.Pessoa;
+import com.duma.funcionario.dto.PessoaFiltroForm;
+import com.duma.funcionario.service.AreaService;
+import com.duma.funcionario.service.AtuacaoService;
 import com.duma.funcionario.service.PessoaService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/pessoas")
@@ -23,16 +32,22 @@ public class PessoasController {
 
     @Autowired
     private PessoaService pessoaService;
+    @Autowired
+    private AtuacaoService atuacaoService;
+    @Autowired
+    private AreaService areaService;
 
-    @GetMapping("/listar")
-    public String listar(ModelMap model){
-        model.addAttribute("pessoas", pessoaService.buscarTodos());
-        return "/pessoa/lista1";
+    @GetMapping("/pre_pesquisar")
+    public String pre_pesquisar(ModelMap model){
+        model.addAttribute("pessoa", new PessoaFiltroForm());
+        model.addAttribute("areas", areaService.buscarTodas());
+        model.addAttribute("subareas", areaService.buscarTodas());
+        return "/pessoa/pesquisa";
     }
 
-
-    @GetMapping("/pre_listar")
-    public String pre_listar(ModelMap model){
+    @GetMapping("/pesquisar")
+    public String pesquisar(PessoaFiltroForm filtro, HttpSession session, ModelMap model){
+        session.setAttribute("PessoaFiltroForm", filtro);
         return "/pessoa/listaJson";
     }
 
@@ -44,28 +59,43 @@ public class PessoasController {
             @RequestParam(name = "length", required = false) Integer length,
             @RequestParam(name = "search[value]", required = false) String searchValue,
             @RequestParam(name = "order[0][column]", required = false) Integer orderColumn,
-            @RequestParam(name = "order[0][dir]", required = false) String orderDir) {
+            @RequestParam(name = "order[0][dir]", required = false) String orderDir,
+            HttpSession session) {
 
         int page = (start != null && length != null) ? start / length : 0;
 
         Sort sort = Sort.unsorted();
         if (orderColumn != null && orderDir != null) {
-            String[] colunas = {"codigo", "nome", "cpf", "email"};
+            String[] colunas = {"codigo", "nome", "cpf", "unidadeVinculo.nome","nome", "departamento", "email"};
             sort = Sort.by(Sort.Direction.fromString(orderDir), colunas[orderColumn]);
         }
 
         PageRequest pageable = PageRequest.of(page, (length != null) ? length : 10, sort);
 
-        String termo = (searchValue != null) ? searchValue : "";
-        Page<Pessoa> pagina = pessoaService.buscarComFiltro(termo, pageable);
+        PessoaFiltroForm filtro = (PessoaFiltroForm) session.getAttribute("PessoaFiltroForm");
+        if(filtro==null){
+            filtro = new PessoaFiltroForm();
+        }
+        Page<Pessoa> pagina = pessoaService.buscarComFiltro(filtro, pageable);
 
         List<List<Object>> data = new ArrayList<>();
         for (Pessoa p : pagina.getContent()) {
+            List<Atuacao> atuacaoes = atuacaoService.bucarPorCodigoPessoa(p.getCodigo());
+            StringBuilder areas = new StringBuilder("<ul>");
+            for(Iterator<Atuacao> a = atuacaoes.iterator(); a.hasNext();){
+                Atuacao atuacao = a.next();
+                areas.append("<li>"+atuacao.getArea().getDescricao()+"</li>");
+            }
+            areas.append("</ul>");
+            String link = "<a href='/pessoa/listar_json'>"+p.getNome()+"</a>";
+            String acao = "<input type='radio' name='listaPessoasSelecionadas' value='"+p.getCodigo()+"'/>";
             List<Object> linha = new ArrayList<>();
-            linha.add(p.getCodigo());
-            linha.add(p.getNome());
+            linha.add(link);
             linha.add(p.getCpfFormatado());
-            linha.add(p.getEmail());
+            linha.add((p.getUnidadeVinculo()!=null)?p.getUnidadeVinculo().getNome():"");
+            linha.add(p.getDepartamento());
+            linha.add(areas);
+            linha.add(acao);
             data.add(linha);
         }
 
