@@ -12,12 +12,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.duma.funcionario.domain.Area;
 import com.duma.funcionario.domain.Atuacao;
-import com.duma.funcionario.domain.Funcionario;
 import com.duma.funcionario.domain.Pessoa;
 import com.duma.funcionario.dto.PessoaFiltroForm;
 import com.duma.funcionario.service.AreaService;
@@ -40,8 +41,8 @@ public class PessoasController {
     @GetMapping("/pre_pesquisar")
     public String pre_pesquisar(ModelMap model){
         model.addAttribute("pessoa", new PessoaFiltroForm());
-        model.addAttribute("areas", areaService.buscarTodas());
-        model.addAttribute("subareas", areaService.buscarTodas());
+        model.addAttribute("areas", areaService.buscarArea());
+        model.addAttribute("subareas", areaService.buscarPorSubAreaPorArea(null));
         return "/pessoa/pesquisa";
     }
 
@@ -49,6 +50,27 @@ public class PessoasController {
     public String pesquisar(PessoaFiltroForm filtro, HttpSession session, ModelMap model){
         session.setAttribute("PessoaFiltroForm", filtro);
         return "/pessoa/listaJson";
+    }
+
+    @GetMapping("/editar_pesquisa")
+    public String editar_pesquisa(HttpSession session, ModelMap model){
+        PessoaFiltroForm filtro = (PessoaFiltroForm) session.getAttribute("PessoaFiltroForm");
+        if(filtro == null)
+            filtro = new PessoaFiltroForm();
+        model.addAttribute("pessoa", filtro);
+        return "/pessoa/pesquisa";
+    }
+
+    @GetMapping("/subareas/{areaId}")
+    @ResponseBody
+    public List<Area> buscarSubArea(@PathVariable Long areaId) {
+        return areaService.buscarPorSubAreaPorArea(areaId);
+    }
+
+    @GetMapping("/subareas")
+    @ResponseBody
+    public List<Area> buscarSubArea() {
+        return areaService.buscarPorSubAreaPorArea(null);
     }
 
     @GetMapping("/listar_json")

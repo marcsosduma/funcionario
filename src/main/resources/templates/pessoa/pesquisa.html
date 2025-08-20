@@ -13,12 +13,28 @@
                 if (valor === '') {
                     this.setCustomValidity('');
                     $(this).removeClass('is-invalid is-valid');
-                    return;                }
-
+                    return;                
+                }
                 const ok = validarCPF(valor);
                 this.setCustomValidity(ok ? '' : 'CPF inválido');
                 $(this).toggleClass('is-invalid', !ok);
                 $(this).toggleClass('is-valid', ok);
+            });
+
+            $('#area').on('change', function () {
+                const areaId = $(this).val();
+                const $subarea = $('#subarea');
+
+                $subarea.empty().append('<option value="">Selecione</option>');
+                url = (areaId)?'/pessoas/subareas/' + areaId:'/pessoas/subareas';
+                $.getJSON(url, function (data) {
+                    $.each(data, function (i, sub) {
+                        $subarea.append($('<option>', {
+                            value: sub.codigo,
+                            text: sub.descricao
+                        }));
+                    });
+                });                
             });
         });
     </script>
@@ -35,10 +51,6 @@
                     </li>
                 </ul>
             </div>
-            <a class="btn btn-primary btn-md" href="/cargos/listar" role="button">
-                <span class="oi oi-spreadsheet" title="Cadastro" aria-hidden="true"></span>
-                <span>Listar Cargos</span>
-            </a>
         </nav>
 
         <div class="container" id="pesquisar">
@@ -136,7 +148,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-2">
-					<button type="reset" class="btn btn-secondary btn-sm">Limpar</button>
+					<button type="reset" onclick="$('#cpf').removeClass('is-invalid is-valid');" class="btn btn-secondary btn-sm">Limpar</button>
 					<button type="submit" class="btn btn-primary btn-sm">Buscar</button>
 				</div>
             </form>

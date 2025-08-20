@@ -14,4 +14,8 @@ public interface AreaDao {
     Area findById(Long id);
 
     List<Area> findAll();
+
+    List<Area> listAreas();
+
+    List<Area> listSubAreas(Long codigoPai);
 }

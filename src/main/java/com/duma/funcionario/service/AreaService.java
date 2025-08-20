@@ -13,4 +13,9 @@ public interface AreaService {
     Area buscarPorId(Long id);
 
     List<Area> buscarTodas();
+
+    List<Area> buscarPorSubAreaPorArea(Long areaId);
+
+    List<Area> buscarArea();
+
 }

@@ -40,4 +40,14 @@ public class AreaServiceImpl implements AreaService {
         return dao.findAll();
     }
 
+    @Override
+    public List<Area> buscarPorSubAreaPorArea(Long areaId) {
+       return dao.listSubAreas(areaId);
+    }
+
+    @Override
+    public List<Area> buscarArea() {
+        return dao.listAreas();
+    }
+
 }
