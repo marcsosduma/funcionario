@@ -130,7 +130,7 @@ public class Pessoa {
     private String conflitoInteresse;
 
     @Column(name = "NOM_FNT_PESWB", nullable = true, length = 70)
-    private String nomeFonético;
+    private String nomeFonetico;
 
     @Column(name = "QTD_PCE_ABT_SAG_PESWB", nullable = true)
     private Integer pareceresAbertosSag;

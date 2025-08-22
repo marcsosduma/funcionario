@@ -42,7 +42,7 @@
             const form = $('#pesquisar form')[0];
             form.reset();                         
             $(form).find('.is-invalid, .is-valid').removeClass('is-invalid is-valid');
-            $(form).find('input, textarea').val('');
+            $(form).find('inputm, select, textarea').val('');
                 form.querySelectorAll('input, select, textarea').forEach(el => {
                 el.setCustomValidity('');
             });
