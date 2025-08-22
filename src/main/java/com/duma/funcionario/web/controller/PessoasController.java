@@ -49,8 +49,16 @@ public class PessoasController {
     @GetMapping("/pesquisar")
     public String pesquisar(PessoaFiltroForm filtro, HttpSession session, ModelMap model){
         session.setAttribute("PessoaFiltroForm", filtro);
+        model.addAttribute("irParaPrimeiraPagina", true);
         return "/pessoa/listaJson";
     }
+
+    @GetMapping("/listagem")
+    public String listagem(ModelMap model){
+        model.addAttribute("irParaPrimeiraPagina", false);
+        return "/pessoa/listaJson";
+    }
+
 
     @GetMapping("/editar_pesquisa")
     public String editar_pesquisa(HttpSession session, ModelMap model){
@@ -135,7 +143,7 @@ public class PessoasController {
             atuacoes.forEach(atuacao -> areas.append("<li>").append(atuacao.getArea().getDescricao()).append("</li>"));
             areas.append("</ul>");
             
-            String link = "<a href='/pessoa/listar_json'>"+p.getNome()+"</a>";
+            String link = "<a href='/pessoas/dadosPessoa/"+p.getCodigo()+"'>"+p.getNome()+"</a>";
             String acao = "<input type='radio' name='listaPessoasSelecionadas' value='"+p.getCodigo()+"'/>";
             
             List<Object> linha = new ArrayList<>();
@@ -155,5 +163,12 @@ public class PessoasController {
         resultado.put("data", data);
 
         return resultado;
+    }
+
+    @GetMapping("/dadosPessoa/{pessoaId}")
+    public String dadosPessoa(@PathVariable Long pessoaId, ModelMap model){
+        Pessoa pessoa = pessoaRepositoryImpl.findById(pessoaId);
+        model.addAttribute("pessoa", pessoa);
+        return "/pessoa/dadosPessoa";
     }
 }

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+    <section class="layout-content" layout:fragment="corpo">
+
+        <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>Dados da Pessoa</span>
+	                    </li>
+	                </ul>
+	                <a class="btn btn-primary btn-md" href="/pessoas/listagem" role="button"> 
+				        <span  class="fa fa-chevron-circle-left fa-lg" title="Voltar" aria-hidden="true"></span>
+			        </a>
+	            </div>
+	    </nav>
+        <div class="container mt-4">
+            <!-- Informações principais -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    Dados Pessoais
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Nome:</label>
+                        <div th:text="${pessoa.nome}"></div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">CPF:</label>
+                        <div th:text="${pessoa.cpfFormatado}"></div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">RG:</label>
+                        <div th:text="${pessoa.rg}"></div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">Sexo:</label>
+                        <div th:text="${pessoa.sexo}"></div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label fw-bold">Data Nascimento:</label>
+                        <div th:text="${#temporals.format(pessoa.dataNascimento, 'dd/MM/yyyy')}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Email:</label>
+                        <div th:text="${pessoa.email}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endereço -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    Endereço
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Logradouro:</label>
+                        <div th:text="${pessoa.logradouro}"></div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label fw-bold">Complemento:</label>
+                        <div th:text="${pessoa.complementoEndereco}"></div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label fw-bold">CEP:</label>
+                        <div th:text="${pessoa.cep}"></div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label fw-bold">Cidade:</label>
+                        <div th:text="${pessoa.cidade}"></div>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label fw-bold">UF:</label>
+                        <div th:text="${pessoa.estado}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contato -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-info text-white">
+                    Contatos
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Telefone Residencial:</label>
+                        <div th:text="${pessoa.telefoneResidencial}"></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Telefone Emergencial:</label>
+                        <div th:text="${pessoa.telefoneEmergencial}"></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Fax:</label>
+                        <div th:text="${pessoa.fax}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informações adicionais -->
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    Informações Adicionais
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Departamento:</label>
+                        <div th:text="${pessoa.departamento}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Função Atual:</label>
+                        <div th:text="${pessoa.funcaoAtual}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Unidade:</label>
+                        <div th:text="${pessoa.unidadeVinculo?.nome}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Data Cadastro:</label>
+                        <div th:text="${#temporals.format(pessoa.dataCadastro, 'dd/MM/yyyy')}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

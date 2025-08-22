@@ -14,5 +14,4 @@ public class PessoaFiltroForm {
     private Integer area;
     private Integer subarea;
     private String unidade;
-    private String ordenacao; // ALFA, OCUPACAO, TEMPO
 }

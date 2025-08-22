@@ -10,52 +10,60 @@
 	<link href="/css/style.css" rel="stylesheet" />
 	<link href="/datatables/datatables.css" rel="stylesheet" />
 	<script src="/datatables/datatables.min.js"></script>
-	<script th:inline="none">
-	$(document).ready(function(){
-		$("#tabela_pessoas").DataTable({
-			ajax: "/pessoas/listar_json",
-			processing: true,
-			serverSide: true,
-			responsive: true,
-			searching: false,
-			//"bSort": false,
-			//"aaSorting": [[0, 'asc']],
-			"pageLength": 10,
-			"language": {
-				"decimal": "",
-				"emptyTable": "Não há dados disponíveis",
-				"info": "_START_ até _END_ de _TOTAL_ registos",
-				"infoEmpty": "Mostrando de 0 até 0 de 0 registos",
-				"infoFiltered": "(filtrado de _MAX_ registos no total)",
-				"infoPostFix": "",
-				"thousands": ".",
-				"lengthMenu": "Mostrar _MENU_ registos",
-				"loadingRecords": "Carregando os dados...",
-				"processing": "<span class='fa-stack fa-lg'>\n\
-                            <i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i>\n\
-                       		</span>&emsp;Processando...",
-				"search": "Procurar:",
-				"zeroRecords": "Não foram encontrados resultados",            
-				"aria": {
-					"sortAscending": ": ordem crescente",
-					"sortDescending": ": ordem decrescente"
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			// Esta variável é populada pelo backend com o Thymeleaf
+			const irParaPrimeiraPagina = [[${irParaPrimeiraPagina}]];
+
+			var tabela = $("#tabela_pessoas").DataTable({
+				"ajax": "/pessoas/listar_json",
+				"processing": true,
+				"serverSide": true,
+				"responsive": true,
+				"searching": false,
+				"stateSave": true,
+				"pageLength": 10,
+				"language": {
+					"decimal": "",
+					"emptyTable": "Não há dados disponíveis",
+					"info": "_START_ até _END_ de _TOTAL_ registos",
+					"infoEmpty": "Mostrando de 0 até 0 de 0 registos",
+					"infoFiltered": "(filtrado de _MAX_ registos no total)",
+					"infoPostFix": "",
+					"thousands": ".",
+					"lengthMenu": "Mostrar _MENU_ registos",
+					"loadingRecords": "Carregando os dados...",
+					"processing": "<span class='fa-stack fa-lg'>\n\
+									<i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i>\n\
+									</span>&emsp;Processando...",
+					"search": "Procurar:",
+					"zeroRecords": "Não foram encontrados resultados",
+					"aria": {
+						"sortAscending": ": ordem crescente",
+						"sortDescending": ": ordem decrescente"
+					},
+					"oPaginate": {
+						"sFirst": "<<",
+						"sPrevious": "<",
+						"sNext": ">",
+						"sLast": ">>"
+					}
 				},
-				"oPaginate": {
-					"sFirst":    "<<",
-					"sPrevious": "<",
-					"sNext":     ">",
-					"sLast":     ">>"
-				}
-			},
-			"columnDefs": [
- 				{ 'orderable': false, 'targets': [ 4, 5 ] },
- 				{
-					"targets": [1],        // coluna número
-					"className": "nowrap"  // Adiciona a classe nowrap
-				}
-			]
+				"columnDefs": [
+					{ 'orderable': false, 'targets': [ 4, 5 ] },
+					{
+						"targets": [1],
+						"className": "nowrap"
+					}
+				]
+			});
+
+			// Este é o lugar correto para usar a variável 'tabela'
+			if (irParaPrimeiraPagina) {
+				tabela.search('').draw(); 
+				tabela.ajax.reload(null, true);
+			}
 		});
-	});
 	</script>
 	<script th:inline="none">
 		function detalharPessoa() {

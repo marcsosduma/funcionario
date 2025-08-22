@@ -26,7 +26,7 @@ public class PessoaRepositoryImpl implements PessoaRepository {
         if (filtro.getNome() != null && !filtro.getNome().isEmpty()) {
             sql += " AND p.nomeFonetico LIKE :nome";
         }
-        if (filtro.getSoAssessores()) {
+        if (filtro.getSoAssessores() != null && filtro.getSoAssessores()) {
             sql += " AND p.indicadorAssessor='S'";
         }
         if(filtro.getCpf()!=null && !filtro.getCpf().trim().isEmpty()){
@@ -93,4 +93,12 @@ public class PessoaRepositoryImpl implements PessoaRepository {
             "SELECT COUNT(p) FROM Pessoa p", Long.class);
         return countQuery.getSingleResult();
     }
+
+    public Pessoa findById(Long id){
+        TypedQuery<Pessoa> query = em.createQuery(
+            "SELECT p FROM Pessoa p where p.codigo = :id", Pessoa.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
 }
